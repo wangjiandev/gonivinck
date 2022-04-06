@@ -3,7 +3,7 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	"mall/service/user/rpc/userclient"
+	"mall/service/user/rpc/user"
 
 	"mall/service/user/api/internal/svc"
 	"mall/service/user/api/internal/types"
@@ -28,7 +28,7 @@ func NewUserInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UserInfo
 func (l *UserInfoLogic) UserInfo() (resp *types.UserInfoResponse, err error) {
 	// 通过 l.ctx.Value("uid") 可获取 jwt token 中自定义的参数
 	uid, _ := l.ctx.Value("uid").(json.Number).Int64()
-	res, err := l.svcCtx.UserRpc.UserInfo(l.ctx, &userclient.UserInfoRequest{
+	res, err := l.svcCtx.UserRpc.UserInfo(l.ctx, &user.UserInfoRequest{
 		Id: uid,
 	})
 	if err != nil {

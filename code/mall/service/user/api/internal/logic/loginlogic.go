@@ -3,7 +3,7 @@ package logic
 import (
 	"context"
 	"mall/common/jwtx"
-	"mall/service/user/rpc/userclient"
+	"mall/service/user/rpc/user"
 	"strconv"
 	"time"
 
@@ -28,7 +28,7 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginRequest) (resp *types.LoginResponse, err error) {
-	res, err := l.svcCtx.UserRpc.Login(l.ctx, &userclient.LoginRequest{
+	res, err := l.svcCtx.UserRpc.Login(l.ctx, &user.LoginRequest{
 		Mobile:   req.Mobile,
 		Password: req.Password,
 	})
