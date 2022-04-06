@@ -3,10 +3,12 @@ package logic
 import (
 	"context"
 
+	"mall/service/order/model"
 	"mall/service/order/rpc/internal/svc"
 	"mall/service/order/rpc/pb"
 
 	"github.com/zeromicro/go-zero/core/logx"
+	"google.golang.org/grpc/status"
 )
 
 type DetailLogic struct {
@@ -24,7 +26,18 @@ func NewDetailLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DetailLogi
 }
 
 func (l *DetailLogic) Detail(in *pb.DetailRequest) (*pb.DetailResponse, error) {
-	// todo: add your logic here and delete this line
-
-	return &pb.DetailResponse{}, nil
+	res, err := l.svcCtx.OrderModel.FindOne(l.ctx, in.Id)
+	if err != nil {
+		if err == model.ErrNotFound {
+			return nil, status.Error(100, "订单不存在")
+		}
+		return nil, status.Error(500, err.Error())
+	}
+	return &pb.DetailResponse{
+		Id:     res.Id,
+		Uid:    res.Uid,
+		Pid:    res.Pid,
+		Amount: res.Amount,
+		Status: res.Status,
+	}, nil
 }
