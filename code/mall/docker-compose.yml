@@ -14,6 +14,8 @@ services:
     container_name: user-api # 指定容器名称
     networks:
       - gonivinck_backend
+    ports: # 设置端口映射
+      - ${USER_HTTP_PORT}:8000
     depends_on:
       - user-rpc
   user-rpc: # 自定义容器名称
@@ -22,6 +24,5 @@ services:
       dockerfile: ./service/user/rpc/Dockerfile # 指定构建使用的 Dockerfile 文件
     restart: always # 指定容器退出后的重启策略为始终重启
     container_name: user-rpc # 指定容器名称
-
     networks:
       - gonivinck_backend
