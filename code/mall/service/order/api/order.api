@@ -80,5 +80,5 @@ service Order {
 	post /api/order/detail(DetailRequest) returns (DetailResponse)
 	
 	@handler List
-	post /api/order/list(ListRequest) returns (ListResponse)
+	post /api/order/list(ListRequest) returns ([]ListResponse)
 }
