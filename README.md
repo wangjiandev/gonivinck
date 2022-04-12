@@ -105,3 +105,18 @@ docker-compose up -d etcd golang mysql redis
 ```bash
 docker exec -it gonivinck_golang_1 bash
 ```
+
+
+
+### 开发中常用goctl命令
+```bash
+
+# 根据sql生成model层并配置缓存
+goctl model mysql ddl -src ./model/pay.sql -dir ./model -c
+
+# 根据api生成api层代码
+goctl api go -api ./api/pay.api -dir ./api
+
+# 根据proto生成rpc层代码
+goctl rpc protoc pay.proto --go_out=./ --go-grpc_out=./ --zrpc_out=./ --style=go_zero
+```
